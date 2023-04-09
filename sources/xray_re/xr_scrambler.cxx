@@ -3,15 +3,16 @@
 
 using namespace xray_re;
 
+#define SIZE_MULT_WW 4141
+#define SEED0_WW 42224411
+#define SEED_WW 35234120
+
 const int SEED_MULT = 0x8088405;
 
 const int SEED_RU = 0x131a9d3;
 const int SEED0_RU = 0x1329436;
 const int SIZE_MULT_RU = 8;
 
-const int SEED_WW = 0x16eb2eb;
-const int SEED0_WW = 0x5bbc4b;
-const int SIZE_MULT_WW = 4;
 
 void xr_scrambler::init(cipher_config cc)
 {
@@ -28,7 +29,7 @@ void xr_scrambler::init_sboxes(int seed, int size_mult)
 {
 	for (int i = SBOX_SIZE - 1; i >= 0; --i)
 		m_enc_sbox[i] = uint8_t(i);
-	for (int i = size_mult*SBOX_SIZE, a, b; i != 0; --i) {
+	for (int i = size_mult, a, b; i != 0; --i) {
 		seed = 1 + seed * SEED_MULT;
 		a = (seed >> 24) & 0xff;
 		do {
